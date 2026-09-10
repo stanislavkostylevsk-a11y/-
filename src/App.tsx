@@ -10,11 +10,16 @@ import { AiGeneratorLab } from "./components/AiGeneratorLab";
 import { TechStackGuide } from "./components/TechStackGuide";
 import { StrategyExportModal } from "./components/StrategyExportModal";
 import { Header } from "./components/Header";
-import { Settings2, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function App() {
   // Mode: "client" (default - 100% focused client sales landing page) or "creator-studio"
-  const [appMode, setAppMode] = useState<"client" | "creator-studio">("client");
+  const [appMode, setAppMode] = useState<"client" | "creator-studio">(() => {
+    if (typeof window !== "undefined" && (window.location.search.includes("studio") || window.location.hash.includes("studio"))) {
+      return "creator-studio";
+    }
+    return "client";
+  });
   const [activeTab, setActiveTab] = useState<string>("landing-page");
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
 
@@ -67,18 +72,6 @@ export default function App() {
   return (
     <div className="relative">
       <ClientLandingPage />
-
-      {/* Discreet bottom link for creator to access internal tools if needed */}
-      <div className="bg-stone-950 py-3 text-center border-t border-stone-900">
-        <button
-          onClick={() => setAppMode("creator-studio")}
-          className="inline-flex items-center gap-1.5 text-[10px] text-stone-700 hover:text-stone-400 transition-colors"
-          title="Служебная панель контент-студии"
-        >
-          <Settings2 className="h-3 w-3" />
-          <span>Панель автора</span>
-        </button>
-      </div>
     </div>
   );
 }
