@@ -30,6 +30,7 @@ import {
   Headphones
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
 import { 
   MINI_AUDIENCE_LIST, 
   MINI_PROGRAM_PHASES, 
@@ -347,7 +348,10 @@ export const ClientLandingPage: React.FC = () => {
                 {/* Photo of Zhdan - Compact and proportional */}
                 <div className="relative overflow-hidden rounded-2xl border border-stone-800 h-60 sm:h-72 w-full">
                   <img
-                    src="/zhdan.jpg"
+                    src={APP_IMAGES.zhdan}
+                    onError={(e) => {
+                      e.currentTarget.src = FALLBACK_IMAGES.zhdan;
+                    }}
                     alt="Сибирский травник Ждан Таёжный"
                     className="w-full h-full object-cover object-top rounded-2xl"
                     referrerPolicy="no-referrer"
@@ -708,6 +712,11 @@ export const ClientLandingPage: React.FC = () => {
                     <div className="flex items-center gap-3">
                       <img
                         src={review.avatarUrl}
+                        onError={(e) => {
+                          if (review.fallbackAvatarUrl) {
+                            e.currentTarget.src = review.fallbackAvatarUrl;
+                          }
+                        }}
                         alt={review.authorName}
                         className="w-10 h-10 rounded-full object-cover border border-emerald-500/40"
                         referrerPolicy="no-referrer"

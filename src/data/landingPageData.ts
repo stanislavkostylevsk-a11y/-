@@ -732,7 +732,8 @@ export function generateLandingPageHtml(): string {
         <div class="lg:col-span-5 relative">
           <div class="rounded-3xl border border-stone-800 bg-stone-900/80 p-5 shadow-2xl relative overflow-hidden">
             <img 
-              src="/zhdan.jpg" 
+              src="./zhdan.jpg" 
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544717302-de2939b7ef71?auto=format&fit=crop&w=800&q=80';"
               alt="Ждан Таёжный на пороге избы" 
               class="w-full h-80 object-cover rounded-2xl border border-stone-800"
             />

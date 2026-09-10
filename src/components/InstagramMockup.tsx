@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { INSTAGRAM_BIO_OPTIONS, HIGHLIGHTS_DATA, INSTAGRAM_FEED_POSTS } from "../data/zhdanData";
 import { InstagramBioOption, HighlightStory, InstagramPost } from "../types";
+import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
 import { Check, Copy, Heart, MessageCircle, Bookmark, Play, Layers, X, Sparkles, Send, Bot, ShieldCheck, ChevronRight, ChevronLeft, ExternalLink } from "lucide-react";
 
 export const InstagramMockup: React.FC = () => {
@@ -146,7 +147,10 @@ export const InstagramMockup: React.FC = () => {
                 <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full p-0.5 bg-gradient-to-tr from-amber-500 via-emerald-500 to-amber-300">
                   <div className="h-full w-full rounded-full border-2 border-stone-950 overflow-hidden bg-stone-900">
                     <img
-                      src="/zhdan.jpg"
+                      src={APP_IMAGES.zhdan}
+                      onError={(e) => {
+                        e.currentTarget.src = FALLBACK_IMAGES.zhdan;
+                      }}
                       alt="Ждан Таёжный"
                       className="h-full w-full object-cover object-top"
                       referrerPolicy="no-referrer"

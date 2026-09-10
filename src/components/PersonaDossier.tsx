@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ZHDAN_PERSONA } from "../data/zhdanData";
+import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
 import { Check, Copy, Sparkles, User, Mic, Palette, ShieldCheck, HeartHandshake, BookOpen, Quote, Flame, Trees } from "lucide-react";
 
 export const PersonaDossier: React.FC = () => {
@@ -24,7 +25,10 @@ export const PersonaDossier: React.FC = () => {
             <div className="relative group">
               <div className="relative h-44 w-44 overflow-hidden rounded-2xl border-2 border-amber-500/40 shadow-2xl shadow-emerald-950">
                 <img
-                  src="/zhdan.jpg"
+                  src={APP_IMAGES.zhdan}
+                  onError={(e) => {
+                    e.currentTarget.src = FALLBACK_IMAGES.zhdan;
+                  }}
                   alt="Ждан Таёжный"
                   className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   referrerPolicy="no-referrer"

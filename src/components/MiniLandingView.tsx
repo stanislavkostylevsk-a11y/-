@@ -5,6 +5,7 @@ import {
   MINI_PACKAGE_ITEMS, 
   MINI_REVIEWS_SCREENSHOTS 
 } from "../data/miniLandingData";
+import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
 import { 
   Trees, 
   Sparkles, 
@@ -136,7 +137,10 @@ export const MiniLandingView: React.FC<MiniLandingViewProps> = ({ onOpenFullTrac
           <div className="mt-6 pt-6 border-t border-stone-800/80 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
             <div className="sm:col-span-3">
               <img 
-                src="/zhdan.jpg" 
+                src={APP_IMAGES.zhdan} 
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_IMAGES.zhdan;
+                }}
                 alt="Ждан Таёжный" 
                 className="w-full aspect-square object-cover rounded-2xl border border-stone-800"
                 referrerPolicy="no-referrer"
@@ -360,6 +364,11 @@ export const MiniLandingView: React.FC<MiniLandingViewProps> = ({ onOpenFullTrac
                   <div className="flex items-center gap-2.5">
                     <img 
                       src={review.avatarUrl} 
+                      onError={(e) => {
+                        if (review.fallbackAvatarUrl) {
+                          e.currentTarget.src = review.fallbackAvatarUrl;
+                        }
+                      }}
                       alt={review.authorName} 
                       className="w-10 h-10 rounded-full object-cover border border-emerald-500/40"
                       referrerPolicy="no-referrer"

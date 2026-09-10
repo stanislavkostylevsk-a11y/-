@@ -1,3 +1,5 @@
+import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
+
 export interface MiniAudienceItem {
   id: string;
   icon: string;
@@ -23,6 +25,7 @@ export interface MiniReviewScreenshot {
   city: string;
   timeAgo: string;
   avatarUrl: string;
+  fallbackAvatarUrl?: string;
   messageText: string;
   metricsBadge: string;
   tag: string;
@@ -148,7 +151,8 @@ export const MINI_REVIEWS_SCREENSHOTS: MiniReviewScreenshot[] = [
     authorAge: 44,
     city: "г. Тверь",
     timeAgo: "Вчера в 08:14",
-    avatarUrl: "/clients/elena.jpg",
+    avatarUrl: APP_IMAGES.elena,
+    fallbackAvatarUrl: FALLBACK_IMAGES.elena,
     tag: "Минус 2.8 кг отеков",
     metricsBadge: "6-й день курса",
     messageText: "Ждан, доброе утро! Сегодня шестой день. Я в шоке от языка: он впервые за много лет чистый, розовый, без этого толстого белого налета! Живот плоский даже к вечеру, ушли утренние отеки под глазами. Весы показывают -2.8 кг воды. Огромная вам благодарность за схему заваривания одуванчика!",
@@ -161,7 +165,8 @@ export const MINI_REVIEWS_SCREENSHOTS: MiniReviewScreenshot[] = [
     authorAge: 52,
     city: "г. Екатеринбург",
     timeAgo: "2 дня назад в 19:40",
-    avatarUrl: "/clients/sergey.jpg",
+    avatarUrl: APP_IMAGES.sergey,
+    fallbackAvatarUrl: FALLBACK_IMAGES.sergey,
     tag: "Анализы в норме",
     metricsBadge: "14 дней закрыты на 100%",
     messageText: "Завершил сегодня 14 дней по трекеру. Никакой тяжести в правом подреберье после обеда больше нет! Впервые за 3 года не засыпаю в 15:00 за рулем, голова ясная. Сдал контрольный билирубин — пришел в норму (был 24.2, стал 13.8). Привык к утренней теплой воде. Это лучшее вложение 990 рублей за весь год.",
@@ -174,7 +179,8 @@ export const MINI_REVIEWS_SCREENSHOTS: MiniReviewScreenshot[] = [
     authorAge: 38,
     city: "г. Самара",
     timeAgo: "Сегодня в 10:25",
-    avatarUrl: "/clients/olga.jpg",
+    avatarUrl: APP_IMAGES.olga,
+    fallbackAvatarUrl: FALLBACK_IMAGES.olga,
     tag: "Травы из аптеки за 680 ₽",
     metricsBadge: "4-й день курса",
     messageText: "Купила все травы в обычной аптеке у дома ровно за 680 рублей, как Ждан написал в списке. Сначала сомневалась, что за копейки без клизм что-то сработает. Но на 3-й день стул стал строго по часам, метеоризм полностью пропал, кожа посвежела. Муж посмотрел на мои результаты и теперь тоже просит ему термос заваривать!",
@@ -187,7 +193,8 @@ export const MINI_REVIEWS_SCREENSHOTS: MiniReviewScreenshot[] = [
     authorAge: 49,
     city: "г. Санкт-Петербург",
     timeAgo: "3 дня назад в 14:15",
-    avatarUrl: "/clients/doctor-valentina.jpg",
+    avatarUrl: APP_IMAGES.doctorValentina,
+    fallbackAvatarUrl: FALLBACK_IMAGES.doctorValentina,
     tag: "Отзыв врача-терапевта",
     metricsBadge: "Профессиональная оценка",
     messageText: "Как врач-терапевт хочу похвалить методику Ждана Таёжного за строгую физиологичность. Никаких экстремальных тюбажей с грелкой и литрами масла, которые могут довести до скорой помощи. Мягкие гидрохолеретики, правильная температура воды 40-45°C и диафрагмальное дыхание — именно то, что нужно перегруженной печени городского человека.",
@@ -299,7 +306,8 @@ export function generateMiniLandingPageHtml(): string {
       <!-- Автор карточка -->
       <div class="p-4 rounded-2xl border border-stone-800 bg-stone-900/70 flex flex-col sm:flex-row items-center gap-4 text-left">
         <img 
-          src="/zhdan.jpg" 
+          src="./zhdan.jpg" 
+          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544717302-de2939b7ef71?auto=format&fit=crop&w=800&q=80';"
           alt="Ждан Таёжный" 
           class="w-20 h-20 rounded-xl object-cover border border-stone-700 shrink-0"
         />
@@ -480,7 +488,12 @@ export function generateMiniLandingPageHtml(): string {
         <div class="p-4 rounded-2xl border border-stone-800 bg-stone-900/90 space-y-3 shadow-lg">
           <div class="flex items-center justify-between text-xs">
             <div class="flex items-center gap-2">
-              <img src="/clients/elena.jpg" class="w-8 h-8 rounded-full object-cover" />
+              <img 
+                src="./clients/elena.jpg" 
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80';"
+                alt="Елена Мельникова"
+                class="w-8 h-8 rounded-full object-cover" 
+              />
               <div>
                 <p class="font-bold text-stone-100">Елена Мельникова, 44 года</p>
                 <p class="text-[10px] text-stone-400">г. Тверь • 6-й день</p>
@@ -502,7 +515,12 @@ export function generateMiniLandingPageHtml(): string {
         <div class="p-4 rounded-2xl border border-stone-800 bg-stone-900/90 space-y-3 shadow-lg">
           <div class="flex items-center justify-between text-xs">
             <div class="flex items-center gap-2">
-              <img src="/clients/sergey.jpg" class="w-8 h-8 rounded-full object-cover" />
+              <img 
+                src="./clients/sergey.jpg" 
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80';"
+                alt="Сергей Кузнецов"
+                class="w-8 h-8 rounded-full object-cover" 
+              />
               <div>
                 <p class="font-bold text-stone-100">Сергей Кузнецов, 52 года</p>
                 <p class="text-[10px] text-stone-400">г. Екатеринбург • 14 дней</p>
@@ -524,7 +542,12 @@ export function generateMiniLandingPageHtml(): string {
         <div class="p-4 rounded-2xl border border-stone-800 bg-stone-900/90 space-y-3 shadow-lg">
           <div class="flex items-center justify-between text-xs">
             <div class="flex items-center gap-2">
-              <img src="/clients/olga.jpg" class="w-8 h-8 rounded-full object-cover" />
+              <img 
+                src="./clients/olga.jpg" 
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80';"
+                alt="Ольга Васильева"
+                class="w-8 h-8 rounded-full object-cover" 
+              />
               <div>
                 <p class="font-bold text-stone-100">Ольга Васильева, 38 лет</p>
                 <p class="text-[10px] text-stone-400">г. Самара • 4-й день</p>
@@ -546,7 +569,12 @@ export function generateMiniLandingPageHtml(): string {
         <div class="p-4 rounded-2xl border border-stone-800 bg-stone-900/90 space-y-3 shadow-lg">
           <div class="flex items-center justify-between text-xs">
             <div class="flex items-center gap-2">
-              <img src="/clients/doctor-valentina.jpg" class="w-8 h-8 rounded-full object-cover" />
+              <img 
+                src="./clients/doctor-valentina.jpg" 
+                onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80';"
+                alt="Д-р Валентина Смирнова"
+                class="w-8 h-8 rounded-full object-cover" 
+              />
               <div>
                 <p class="font-bold text-stone-100">Д-р Валентина Смирнова, 49 лет</p>
                 <p class="text-[10px] text-stone-400">г. Санкт-Петербург • Врач</p>

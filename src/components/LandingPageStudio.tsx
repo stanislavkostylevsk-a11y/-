@@ -17,6 +17,7 @@ import {
 } from "../data/landingPageData";
 import { generateMiniLandingPageHtml } from "../data/miniLandingData";
 import { MiniLandingView } from "./MiniLandingView";
+import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
 import { 
   Trees, 
   Sparkles, 
@@ -619,7 +620,10 @@ export const LandingPageStudio: React.FC = () => {
                       <div className="rounded-3xl border border-stone-800 bg-stone-900/90 p-4 sm:p-5 shadow-2xl relative overflow-hidden">
                         <div className="relative rounded-2xl overflow-hidden border border-stone-800">
                           <img 
-                            src="/zhdan.jpg" 
+                            src={APP_IMAGES.zhdan}
+                            onError={(e) => {
+                              e.currentTarget.src = FALLBACK_IMAGES.zhdan;
+                            }}
                             alt="Ждан Таёжный на рассвете" 
                             className="w-full h-72 sm:h-80 object-cover"
                           />
@@ -1236,7 +1240,10 @@ export const LandingPageStudio: React.FC = () => {
                     <div className="lg:col-span-5">
                       <div className="rounded-3xl border border-stone-800 bg-stone-900 p-3 shadow-2xl relative">
                         <img 
-                          src="/zhdan.jpg" 
+                          src={APP_IMAGES.zhdan}
+                          onError={(e) => {
+                            e.currentTarget.src = FALLBACK_IMAGES.zhdan;
+                          }}
                           alt="Ждан Таёжный сбор трав" 
                           className="w-full h-80 object-cover rounded-2xl border border-stone-800"
                         />
