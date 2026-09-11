@@ -34,8 +34,7 @@ import { APP_IMAGES, FALLBACK_IMAGES } from "../assets/images";
 import { 
   MINI_AUDIENCE_LIST, 
   MINI_PROGRAM_PHASES, 
-  MINI_PACKAGE_ITEMS, 
-  MINI_REVIEWS_SCREENSHOTS 
+  MINI_PACKAGE_ITEMS 
 } from "../data/miniLandingData";
 import { FAQ_DATA, COMPARISON_TABLE_DATA } from "../data/landingPageData";
 
@@ -170,7 +169,6 @@ export const ClientLandingPage: React.FC = () => {
             <a href="#symptoms" className="hover:text-emerald-400 transition-colors">Симптомы</a>
             <a href="#program" className="hover:text-emerald-400 transition-colors">Программа 14 дней</a>
             <a href="#package" className="hover:text-emerald-400 transition-colors">Что внутри</a>
-            <a href="#reviews" className="hover:text-emerald-400 transition-colors">Отзывы</a>
             <a href="#faq" className="hover:text-emerald-400 transition-colors">Вопросы</a>
           </nav>
 
@@ -230,13 +228,6 @@ export const ClientLandingPage: React.FC = () => {
               className="block py-2 text-stone-300 hover:text-emerald-400 font-medium"
             >
               Что входит в комплект
-            </a>
-            <a
-              href="#reviews"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block py-2 text-stone-300 hover:text-emerald-400 font-medium"
-            >
-              Отзывы участников
             </a>
             <a
               href="#faq"
@@ -684,87 +675,6 @@ export const ClientLandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 8. ОТЗЫВЫ И РЕАЛЬНЫЕ РЕЗУЛЬТАТЫ */}
-      <section id="reviews" className="py-16 bg-stone-900/50 border-t border-stone-800">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">
-              Честные результаты
-            </span>
-            <h2 className="font-['Cinzel'] text-2xl sm:text-4xl font-bold text-stone-100">
-              Отзывы участников закрытого потока
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-400">
-              Реальные сообщения из нашего закрытого Telegram-сообщества и отчёты участников:
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {MINI_REVIEWS_SCREENSHOTS.map((review) => (
-              <div
-                key={review.id}
-                className="p-5 rounded-3xl border border-stone-800 bg-stone-900/90 shadow-xl space-y-3 flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  {/* User info */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={review.avatarUrl}
-                        onError={(e) => {
-                          if (review.fallbackAvatarUrl) {
-                            e.currentTarget.src = review.fallbackAvatarUrl;
-                          }
-                        }}
-                        alt={review.authorName}
-                        className="w-10 h-10 rounded-full object-cover border border-emerald-500/40"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div>
-                        <div className="font-bold text-xs sm:text-sm text-stone-100">
-                          {review.authorName} ({review.authorAge} года)
-                        </div>
-                        <div className="text-[10px] text-stone-400">
-                          {review.city} • {review.timeAgo}
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">
-                      {review.tag}
-                    </span>
-                  </div>
-
-                  {/* Message Bubble */}
-                  <div className="p-3.5 rounded-2xl bg-stone-950 border border-stone-800/80 text-xs text-stone-200 leading-relaxed space-y-2">
-                    <p>«{review.messageText}»</p>
-                    <div className="flex items-center justify-between text-[10px] text-stone-500 pt-1 border-t border-stone-900">
-                      <span className="text-emerald-400 font-semibold">{review.metricsBadge}</span>
-                      <span>✓✓ Проверено</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Telegram Reactions */}
-                <div className="flex items-center gap-2 pt-1 text-xs">
-                  <span className="inline-flex items-center gap-1 bg-stone-950 px-2.5 py-1 rounded-full border border-stone-800 text-[11px] text-stone-300">
-                    <span>🔥</span> {review.fireCount}
-                  </span>
-                  <span className="inline-flex items-center gap-1 bg-stone-950 px-2.5 py-1 rounded-full border border-stone-800 text-[11px] text-stone-300">
-                    <span>❤️</span> {review.likesCount}
-                  </span>
-                  <span className="ml-auto text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="h-3 w-3" />
-                    Подтвержденный результат
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
       {/* 9. ФОРМА БЫСТРОЙ И БЕЗОПАСНОЙ ОПЛАТЫ (CHECKOUT) */}
       <section id="checkout" className="py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1078,7 +988,6 @@ export const ClientLandingPage: React.FC = () => {
             <div className="flex flex-wrap items-center gap-4 text-xs text-stone-400">
               <a href="#about" className="hover:text-stone-200 transition-colors">О методе</a>
               <a href="#program" className="hover:text-stone-200 transition-colors">Программа</a>
-              <a href="#reviews" className="hover:text-stone-200 transition-colors">Отзывы</a>
               <a href="#faq" className="hover:text-stone-200 transition-colors">FAQ</a>
               <a
                 href="https://t.me"
