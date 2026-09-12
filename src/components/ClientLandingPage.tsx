@@ -37,8 +37,35 @@ import {
   MINI_PACKAGE_ITEMS 
 } from "../data/miniLandingData";
 import { FAQ_DATA, COMPARISON_TABLE_DATA } from "../data/landingPageData";
+import { LegalModal, LegalTabType } from "./LegalModal";
+import { LEGAL_REQUISITES } from "../data/legalDocuments";
 
 export const ClientLandingPage: React.FC = () => {
+  // Legal modal state
+  const [legalModalOpen, setLegalModalOpen] = useState<boolean>(false);
+  const [legalModalTab, setLegalModalTab] = useState<LegalTabType>("offer");
+
+  const openLegalModal = (tab: LegalTabType) => {
+    setLegalModalTab(tab);
+    setLegalModalOpen(true);
+  };
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === "#offer" || hash === "#oferta") {
+        openLegalModal("offer");
+      } else if (hash === "#privacy" || hash === "#policy") {
+        openLegalModal("privacy");
+      } else if (hash === "#requisites" || hash === "#rekvizity") {
+        openLegalModal("requisites");
+      }
+    };
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
+
   // 1. Countdown timer (urgent discount state)
   const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 18, seconds: 29 });
 
@@ -878,8 +905,29 @@ export const ClientLandingPage: React.FC = () => {
                   )}
                 </button>
 
+                {/* Legal Consent Notice for Moderation */}
+                <p className="text-[11px] text-stone-400 text-center leading-relaxed pt-2 px-2">
+                  Нажимая кнопку «Оплатить», вы соглашаетесь с условиями{" "}
+                  <button
+                    type="button"
+                    onClick={() => openLegalModal("offer")}
+                    className="text-emerald-400 hover:text-emerald-300 underline font-medium cursor-pointer"
+                  >
+                    Договора оферты
+                  </button>{" "}
+                  и даете согласие на обработку персональных данных в соответствии с{" "}
+                  <button
+                    type="button"
+                    onClick={() => openLegalModal("privacy")}
+                    className="text-emerald-400 hover:text-emerald-300 underline font-medium cursor-pointer"
+                  >
+                    Политикой конфиденциальности
+                  </button>
+                  .
+                </p>
+
                 {/* Trust Badges */}
-                <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-stone-400 pt-3">
+                <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-stone-400 pt-2">
                   <span className="flex items-center gap-1">
                     <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
                     Безопасный 256-bit платеж
@@ -969,10 +1017,11 @@ export const ClientLandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 12. КЛИЕНТСКИЙ ФУТЕР */}
+      {/* 12. КЛИЕНТСКИЙ ФУТЕР С ОБЯЗАТЕЛЬНЫМИ ЮРИДИЧЕСКИМИ ДОКУМЕНТАМИ И РЕКВИЗИТАМИ */}
       <footer className="border-t border-stone-800/80 bg-stone-950 py-12 text-xs text-stone-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
+          {/* Top Brand & Navigation Line */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-stone-800">
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-stone-200">
@@ -1001,7 +1050,93 @@ export const ClientLandingPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] text-stone-400 leading-relaxed">
+          {/* Official Requisites & Legal Navigation Panel for Bank Moderation */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-5 sm:p-6 rounded-3xl bg-stone-900/60 border border-stone-800/80">
+            
+            {/* Requisites Block */}
+            <div className="md:col-span-6 space-y-2 text-stone-300">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">
+                Официальные реквизиты продавца:
+              </span>
+              <div className="space-y-1 text-xs text-stone-300">
+                <p className="font-bold text-stone-100 flex items-center gap-2">
+                  <span>Самозанятый {LEGAL_REQUISITES.fullName}</span>
+                  <span className="text-[10px] font-normal px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">
+                    НПД (ФЗ № 422-ФЗ)
+                  </span>
+                </p>
+                <p className="text-stone-400">
+                  ИНН: <span className="font-mono text-stone-200 font-semibold">{LEGAL_REQUISITES.inn}</span>
+                </p>
+                <p className="text-stone-400 flex items-center gap-1.5">
+                  <span>Email для обращений:</span>
+                  <a 
+                    href={`mailto:${LEGAL_REQUISITES.email}`} 
+                    className="text-emerald-400 hover:underline font-mono"
+                  >
+                    {LEGAL_REQUISITES.email}
+                  </a>
+                </p>
+                <p className="text-[11px] text-stone-400 pt-1">
+                  Предмет реализации: доступ к цифровому контенту (электронный курс и веб-трекер «Таёжный Перезапуск»).
+                </p>
+              </div>
+            </div>
+
+            {/* Active Legal Links with Modal Triggers */}
+            <div className="md:col-span-6 flex flex-col justify-between space-y-3">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 block mb-2">
+                  Юридические документы и оферта:
+                </span>
+                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2.5">
+                  <a
+                    href="#offer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openLegalModal("offer");
+                    }}
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 hover:bg-stone-900 text-stone-200 hover:text-emerald-300 transition-colors text-xs font-medium cursor-pointer"
+                  >
+                    <FileText className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                    <span>Договор публичной оферты</span>
+                  </a>
+
+                  <a
+                    href="#privacy"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openLegalModal("privacy");
+                    }}
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 hover:bg-stone-900 text-stone-200 hover:text-emerald-300 transition-colors text-xs font-medium cursor-pointer"
+                  >
+                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                    <span>Политика конфиденциальности</span>
+                  </a>
+
+                  <a
+                    href="#requisites"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      openLegalModal("requisites");
+                    }}
+                    className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 hover:bg-stone-900 text-stone-200 hover:text-emerald-300 transition-colors text-xs font-medium cursor-pointer"
+                  >
+                    <CreditCard className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+                    <span>Карточка реквизитов</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-2 text-[11px] text-stone-500">
+                <span>Чек формируется в сервисе «Мой налог» и отправляется в электронном виде. Без скрытых подписок.</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Medical Disclaimer & Copyright */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] text-stone-400 leading-relaxed pt-2">
             <div>
               <p className="font-semibold text-stone-300 mb-1">Отказ от медицинской ответственности:</p>
               <p>
@@ -1009,19 +1144,25 @@ export const ClientLandingPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="md:text-right space-y-1">
+            <div className="md:text-right space-y-1 text-stone-400">
               <p>© {new Date().getFullYear()} Ждан Таёжный. Все права защищены.</p>
-              <p>Индивидуальный предприниматель / Самозанятый</p>
-              <div className="flex md:justify-end gap-3 pt-1 text-stone-400">
-                <a href="#checkout" className="hover:text-stone-200 underline">Публичная оферта</a>
-                <span>•</span>
-                <a href="#checkout" className="hover:text-stone-200 underline">Политика конфиденциальности</a>
-              </div>
+              <p>Самозанятый Костылев С.Г. • ИНН 224401866593</p>
+              <p className="text-[10px] text-stone-500">
+                Защита персональных данных согласно Федеральному закону РФ № 152-ФЗ
+              </p>
             </div>
           </div>
 
         </div>
       </footer>
+
+      {/* Legal Documents Modal */}
+      <LegalModal
+        isOpen={legalModalOpen}
+        activeTab={legalModalTab}
+        onClose={() => setLegalModalOpen(false)}
+        onTabChange={setLegalModalTab}
+      />
 
     </div>
   );

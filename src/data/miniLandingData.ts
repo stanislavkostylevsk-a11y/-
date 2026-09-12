@@ -656,6 +656,10 @@ export function generateMiniLandingPageHtml(): string {
             ОПЛАТИТЬ 990 ₽ И ПОЛУЧИТЬ ДОСТУП
           </button>
 
+          <p class="text-[11px] text-stone-400 text-center leading-relaxed pt-2">
+            Нажимая кнопку «Оплатить», вы соглашаетесь с условиями <a href="#offer-doc" class="text-emerald-400 underline">Договора оферты</a> и даете согласие на обработку персональных данных в соответствии с <a href="#privacy-doc" class="text-emerald-400 underline">Политикой конфиденциальности</a>.
+          </p>
+
           <div class="flex flex-wrap items-center justify-center gap-4 text-[11px] text-stone-400 pt-1">
             <span>🔒 Безопасный 256-bit платеж</span>
             <span>•</span>
@@ -675,10 +679,27 @@ export function generateMiniLandingPageHtml(): string {
 
   </main>
 
-  <footer class="border-t border-stone-800/80 bg-stone-950 py-8 text-xs text-stone-500 text-center">
-    <div class="max-w-4xl mx-auto px-4 space-y-2">
-      <p class="text-stone-400 font-cinzel font-bold">ЖДАН ТАЁЖНЫЙ (63 ГОДА) • ТАЁЖНЫЙ ПЕРЕЗАПУСК</p>
-      <p>ИП Таёжный Ж. В. • 2026 • Без скрытых списаний и автоподписок</p>
+  <footer class="border-t border-stone-800/80 bg-stone-950 py-10 text-xs text-stone-400">
+    <div class="max-w-4xl mx-auto px-4 space-y-6 text-center">
+      <div class="p-5 rounded-2xl bg-stone-900/60 border border-stone-800 text-left space-y-2">
+        <p class="text-xs font-bold text-stone-200 uppercase tracking-wider">Официальные реквизиты продавца:</p>
+        <p class="text-stone-300 font-semibold">Самозанятый Костылев С.Г. (НПД, ст. 422-ФЗ)</p>
+        <p class="text-stone-400">ИНН: <span class="font-mono text-stone-200">224401866593</span></p>
+        <p class="text-stone-400">Email службы поддержки: <a href="mailto:ksg2190@mail.ru" class="text-emerald-400 underline">ksg2190@mail.ru</a></p>
+        <p class="text-[11px] text-stone-500 pt-1">Предмет реализации: право доступа к цифровому контенту (онлайн-курс и веб-трекер «Таёжный Перезапуск»).</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 text-xs">
+        <a href="#offer-doc" onclick="showLegal('offer')" class="text-emerald-400 hover:underline">Договор публичной оферты</a>
+        <span>•</span>
+        <a href="#privacy-doc" onclick="showLegal('privacy')" class="text-emerald-400 hover:underline">Политика конфиденциальности</a>
+        <span>•</span>
+        <a href="#requisites" onclick="showLegal('req')" class="text-stone-300 hover:underline">Реквизиты продавца</a>
+      </div>
+
+      <p class="text-[11px] text-stone-500 leading-relaxed">
+        Материалы курса носят исключительно общеоздоровительный характер и не заменяют консультации врача.<br>© 2026 Ждан Таёжный. Все права защищены.
+      </p>
     </div>
   </footer>
 
@@ -688,7 +709,16 @@ export function generateMiniLandingPageHtml(): string {
       const name = document.getElementById('quick-name').value;
       const email = document.getElementById('quick-email').value;
       document.getElementById('payment-success').classList.remove('hidden');
-      alert('Спасибо, ' + name + '! Оплата 990 ₽ прошла успешно. Ссылка на интерактивный трекер отправлена на ' + email);
+      alert('Спасибо, ' + name + '! Оплата 990 ₽ прошла успешно. Ссылка на цифровые материалы отправлена на ' + email);
+    }
+    function showLegal(type) {
+      if (type === 'offer') {
+        alert('ДОГОВОР ПУБЛИЧНОЙ ОФЕРТЫ\\nПродавец: Самозанятый Костылев С.Г. (ИНН 224401866593)\\nПредмет: Предоставление права доступа к цифровому контенту «Таёжный Перезапуск». Обязательства считаются исполненными в момент направления ссылки доступа на e-mail Покупателя.\\nКонтакты: ksg2190@mail.ru');
+      } else if (type === 'privacy') {
+        alert('ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ (152-ФЗ)\\nОператор: Самозанятый Костылев С.Г. (ИНН 224401866593)\\nСбор данных (имя, телефон, e-mail) осуществляется исключительно для исполнения заказа и направления электронного чека.\\nEmail для отзыва: ksg2190@mail.ru');
+      } else {
+        alert('РЕКВИЗИТЫ:\\nСамозанятый Костылев С.Г.\\nИНН: 224401866593\\nEmail: ksg2190@mail.ru\\nСпециальный налоговый режим НПД');
+      }
     }
   </script>
 </body>
