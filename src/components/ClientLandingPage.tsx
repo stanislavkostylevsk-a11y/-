@@ -26,7 +26,6 @@ import {
   HeartPulse,
   Droplets,
   MessageCircle,
-  Award,
   Headphones
 } from "lucide-react";
 import confetti from "canvas-confetti";
@@ -995,25 +994,6 @@ export const ClientLandingPage: React.FC = () => {
             })}
           </div>
 
-        </div>
-      </section>
-
-      {/* 11. ГАРАНТИЯ ЧЕСТНОСТИ ЖДАНА ТАЁЖНОГО */}
-      <section className="py-12 border-t border-stone-800">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-6 sm:p-8 rounded-3xl bg-stone-900/90 border border-amber-500/30 flex flex-col sm:flex-row items-center gap-6 shadow-xl">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-amber-950/80 border border-amber-500/60 text-amber-400">
-              <Award className="h-8 w-8" />
-            </div>
-            <div className="space-y-1.5 text-center sm:text-left">
-              <h3 className="font-['Cinzel'] font-bold text-base sm:text-lg text-stone-100">
-                100% Честная гарантия на первые 3 дня
-              </h3>
-              <p className="text-xs text-stone-300 leading-relaxed">
-                Если вы начнете выполнять простые утренние рекомендации Ждана и поймете, что методика вам не подходит — просто напишите нам в Telegram-поддержку. Мы вернем вам 100% уплаченной суммы без лишних вопросов и претензий.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
