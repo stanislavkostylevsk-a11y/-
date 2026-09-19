@@ -28,7 +28,7 @@ export default function DirectChatModal({ isOpen, onClose, onOpenOrder }: Direct
     setSent(true);
     setTimeout(() => {
       window.open(
-        `https://t.me/AmiAmii2?text=${encodeURIComponent(`Здравствуйте, Амалия! Вопрос по курсу «Сама себе бровист»: ${finalMsg}`)}`,
+        `https://t.me/AmiAmii23?text=${encodeURIComponent(`Здравствуйте, Амалия! Вопрос по курсу «Сама себе бровист»: ${finalMsg}`)}`,
         '_blank'
       );
     }, 600);
@@ -142,7 +142,7 @@ export default function DirectChatModal({ isOpen, onClose, onOpenOrder }: Direct
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-2.5 px-2 rounded-xl bg-white border border-[#D8C7B5] hover:bg-[#FAF7F2] text-xs font-bold text-[#1C1714] flex items-center justify-center gap-1.5 transition-colors"
-                title="Telegram @AmiAmii2"
+                title="Telegram @AmiAmii23"
               >
                 <Send className="w-4 h-4 text-[#2AABEE]" />
                 <span>Telegram</span>

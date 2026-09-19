@@ -43,7 +43,7 @@ export default function OrderModal({ isOpen, onClose, onOpenLegal }: OrderModalP
     );
 
     if (platform === 'telegram') {
-      window.open(`https://t.me/AmiAmii2?text=${text}`, '_blank');
+      window.open(`https://t.me/AmiAmii23?text=${text}`, '_blank');
     } else {
       window.open(AUTHOR_INFO.instagramUrl, '_blank');
     }
