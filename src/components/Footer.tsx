@@ -71,7 +71,7 @@ export default function Footer({ onOpenOrder, onOpenDirectChat, onOpenLegal }: F
             <ul className="space-y-2 text-[#D8C7B5]">
               <li><a href="#hero-section" className="hover:text-white transition-colors">Главная</a></li>
               <li><a href="#about-course" className="hover:text-white transition-colors">О курсе</a></li>
-              <li><a href="#course-program" className="hover:text-white transition-colors">Программа курса (блоки 1 и 2)</a></li>
+              <li><a href="#course-program" className="hover:text-white transition-colors">Программа курса</a></li>
               <li><a href="#how-it-works" className="hover:text-white transition-colors">Формат обучения</a></li>
               <li><a href="#benefits" className="hover:text-white transition-colors">Плюсы курса</a></li>
               <li><a href="#author" className="hover:text-white transition-colors">Об авторе (Амалия)</a></li>
