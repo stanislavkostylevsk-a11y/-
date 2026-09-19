@@ -1,11 +1,40 @@
-<div align="center">
+# Онлайн-курс «Сама себе бровист» — Амалия
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Продающий лендинг авторского онлайн мини-курса «Сама себе бровист» топ-мастера бровиста Амалии (@Amaliya_brows).
 
-  <h1>Built with AI Studio</h2>
+## Стек технологий
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+- **React 19** + **TypeScript**
+- **Vite**
+- **Tailwind CSS v4**
+- **Lucide React** (иконки)
+- **Motion** (анимации)
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Локальный запуск
 
-</div>
+```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+```
+
+Приложение будет доступно по адресу `http://localhost:3000`.
+
+## Сборка для публикации (Production)
+
+```bash
+npm run build
+```
+
+Собранные статические файлы будут находиться в папке `dist/`.
+
+## Бесплатный деплой проекта
+
+Проект представляет собой SPA (Single Page Application) и готов к публикации на любой бесплатный хостинг:
+
+1. **Vercel** — подключите ваш репозиторий GitHub, фреймворк определится автоматически (Vite).
+2. **Netlify** — подключите репозиторий, build command: `npm run build`, publish directory: `dist`.
+3. **GitHub Pages** — можно настроить деплой через стандартный GitHub Actions workflow для Vite.
+4. **Cloudflare Pages** — автоматический деплой из GitHub с настройкой `dist` в качестве каталога сборки.
