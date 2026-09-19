@@ -53,3 +53,42 @@ export interface FaqItem {
   question: string;
   answer: string;
 }
+
+// Program block types from the document
+export interface CourseDocBlock {
+  id: string;
+  blockNumber: string;
+  title: string;
+  badge: string;
+  summary: string;
+  content: string;
+}
+
+export interface BronsunShade {
+  code: string;
+  name: string;
+  tone: string;
+  description: string;
+  targetAudience: string;
+  colorHex: string;
+}
+
+export interface MixRecipe {
+  category: string;
+  name: string;
+  formula: string;
+  description: string;
+}
+
+export interface HennaShade {
+  code: string;
+  name: string;
+  characteristic: string;
+}
+
+export interface MaterialItem {
+  name: string;
+  role: string;
+  advice: string;
+  iconType: string;
+}

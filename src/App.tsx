@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutCourseSection from './components/AboutCourseSection';
 import AuthorSection from './components/AuthorSection';
+import CourseCurriculumSection from './components/CourseCurriculumSection';
 import TariffsSection from './components/TariffsSection';
 import FaqSection from './components/FaqSection';
 import Footer from './components/Footer';
@@ -47,6 +48,11 @@ export default function App() {
 
         {/* 2. Core Course Details: About, Learning Outcomes, Format & Key Benefits */}
         <AboutCourseSection
+          onOpenOrder={() => handleOpenOrder('solo')}
+        />
+
+        {/* 3. Detailed Course Document Curriculum: 1st Block (Form), 2nd Block (Bronsun + Mixes), Henna, Wax, Materials */}
+        <CourseCurriculumSection
           onOpenOrder={() => handleOpenOrder('solo')}
         />
 

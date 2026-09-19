@@ -42,7 +42,7 @@ export default function Header({ onOpenOrder, onOpenDirectChat }: HeaderProps) {
 
   const navLinks = [
     { label: 'О курсе', href: '#about-course' },
-    { label: 'Чему научитесь', href: '#learning-outcomes' },
+    { label: 'Программа курса', href: '#course-program' },
     { label: 'Формат', href: '#how-it-works' },
     { label: 'Плюсы курса', href: '#benefits' },
     { label: 'Об авторе', href: '#author' },
