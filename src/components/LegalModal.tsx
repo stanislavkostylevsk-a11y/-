@@ -1,199 +1,300 @@
-import { X, ShieldCheck, FileText } from 'lucide-react';
-import { AUTHOR_INFO } from '../data/courseData';
-import Logo from './Logo';
+import React, { useState, useEffect } from "react";
+import { 
+  OFFER_CONTRACT_TEXT, 
+  PRIVACY_POLICY_TEXT, 
+  LEGAL_REQUISITES 
+} from "../data/legalDocuments";
+import { 
+  X, 
+  FileText, 
+  ShieldCheck, 
+  Building2, 
+  Copy, 
+  Check, 
+  Printer, 
+  Mail, 
+  CreditCard,
+  Download,
+  AlertCircle
+} from "lucide-react";
+
+export type LegalTabType = "offer" | "privacy" | "requisites";
 
 interface LegalModalProps {
   isOpen: boolean;
-  type: 'offer' | 'privacy' | null;
+  activeTab: LegalTabType;
   onClose: () => void;
+  onTabChange?: (tab: LegalTabType) => void;
 }
 
-export default function LegalModal({ isOpen, type, onClose }: LegalModalProps) {
-  if (!isOpen || !type) return null;
+export const LegalModal: React.FC<LegalModalProps> = ({
+  isOpen,
+  activeTab: initialTab,
+  onClose,
+  onTabChange
+}) => {
+  const [currentTab, setCurrentTab] = useState<LegalTabType>(initialTab);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  const isOffer = type === 'offer';
+  useEffect(() => {
+    setCurrentTab(initialTab);
+  }, [initialTab]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const handleSelectTab = (tab: LegalTabType) => {
+    setCurrentTab(tab);
+    if (onTabChange) {
+      onTabChange(tab);
+    }
+  };
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(label);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200"
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-3xl bg-white rounded-3xl shadow-2xl border border-[#D8C7B5] overflow-hidden my-auto max-h-[90vh] flex flex-col"
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-stone-950/80 backdrop-blur-sm animate-fade-in">
+      <div 
+        className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl bg-stone-900 border border-stone-800 shadow-2xl overflow-hidden text-stone-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Modal Header */}
-        <div className="p-4 sm:p-5 bg-[#FAF7F2] border-b border-[#EAE1D7] flex items-center justify-between shrink-0">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-stone-800 bg-stone-950/80">
           <div className="flex items-center gap-3">
-            <Logo variant="light" size="sm" showSubtitle={false} showText={false} />
+            <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/60 text-emerald-400">
+              {currentTab === "offer" && <FileText className="h-5 w-5" />}
+              {currentTab === "privacy" && <ShieldCheck className="h-5 w-5" />}
+              {currentTab === "requisites" && <Building2 className="h-5 w-5" />}
+            </div>
             <div>
-              <span className="text-[11px] uppercase tracking-wider font-semibold text-[#886C56]">
-                Юридическая информация • Amalia Brows
-              </span>
-              <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1714]">
-                {isOffer ? 'Публичная оферта' : 'Политика конфиденциальности'}
-              </h3>
+              <h2 className="font-['Cinzel'] text-base sm:text-lg font-bold text-stone-100">
+                {currentTab === "offer" && "Договор публичной оферты"}
+                {currentTab === "privacy" && "Политика конфиденциальности"}
+                {currentTab === "requisites" && "Реквизиты самозанятого"}
+              </h2>
+              <p className="text-[11px] text-stone-400">
+                Самозанятый {LEGAL_REQUISITES.fullName} • ИНН {LEGAL_REQUISITES.inn}
+              </p>
             </div>
           </div>
 
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrint}
+              title="Распечатать документ"
+              className="p-2 rounded-xl text-stone-400 hover:text-stone-100 hover:bg-stone-800 border border-transparent hover:border-stone-700 transition-colors hidden sm:flex items-center gap-1.5 text-xs"
+            >
+              <Printer className="h-4 w-4" />
+              <span>Печать</span>
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-xl text-stone-400 hover:text-stone-100 hover:bg-stone-800 border border-transparent hover:border-stone-700 transition-colors"
+              aria-label="Закрыть окно"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b border-stone-800 bg-stone-950/40 px-5 pt-2 gap-2 overflow-x-auto">
           <button
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-[#EAE1D7] text-[#665040] hover:text-[#1C1714] transition-colors"
-            aria-label="Закрыть"
+            onClick={() => handleSelectTab("offer")}
+            className={`pb-3 px-3.5 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+              currentTab === "offer"
+                ? "border-emerald-500 text-emerald-400"
+                : "border-transparent text-stone-400 hover:text-stone-200"
+            }`}
           >
-            <X className="w-5 h-5" />
+            <FileText className="h-3.5 w-3.5" />
+            <span>Договор оферты</span>
+          </button>
+
+          <button
+            onClick={() => handleSelectTab("privacy")}
+            className={`pb-3 px-3.5 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+              currentTab === "privacy"
+                ? "border-emerald-500 text-emerald-400"
+                : "border-transparent text-stone-400 hover:text-stone-200"
+            }`}
+          >
+            <ShieldCheck className="h-3.5 w-3.5" />
+            <span>Политика конфиденциальности</span>
+          </button>
+
+          <button
+            onClick={() => handleSelectTab("requisites")}
+            className={`pb-3 px-3.5 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+              currentTab === "requisites"
+                ? "border-emerald-500 text-emerald-400"
+                : "border-transparent text-stone-400 hover:text-stone-200"
+            }`}
+          >
+            <Building2 className="h-3.5 w-3.5" />
+            <span>Реквизиты и контакты</span>
           </button>
         </div>
 
-        {/* Scrollable Content */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-xs sm:text-sm text-[#42342A] leading-relaxed">
-          {isOffer ? (
-            <>
-              <div>
-                <p className="text-xs text-[#886C56] mb-4">
-                  Редакция от {new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })} г.
-                </p>
-                <p className="font-medium">
-                  Настоящий документ является публичной офертой (предложением) физического лица, применяющего специальный налоговый режим «Налог на профессиональный доход» (самозанятая), <strong>{AUTHOR_INFO.fullName}</strong> (ИНН {AUTHOR_INFO.inn}), именуемой в дальнейшем «Исполнитель», адресованной любому дееспособному физическому лицу (далее — «Заказчик»), заключить договор на оказание платных информационно-консультационных онлайн-услуг на нижеследующих условиях:
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">1. Предмет договора</h4>
-                <p>
-                  1.1. Исполнитель обязуется предоставить Заказчику доступ к материалам авторского обучающего онлайн мини-курса <strong>«Сама себе бровист»</strong> (включающего 2 практических видеоурока, теоретические модули, гайды по колористике, подбору формы и список проверенных материалов), а Заказчик обязуется оплатить эти услуги в полном объеме.
-                </p>
-                <p>
-                  1.2. Доступ к обучающим материалам предоставляется дистанционно посредством закрытого канала / чата в мессенджере Telegram или на обучающей платформе.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">2. Акцепт оферты и заключение договора</h4>
-                <p>
-                  2.1. Полным и безоговорочным акцептом (принятием) условий настоящей Публичной оферты является совершение Заказчиком одного из следующих действий:
-                </p>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Заполнение формы заявки на сайте и нажатие кнопки «Оплатить», «Купить курс» или «Занять место»;</li>
-                  <li>Оплата стоимости курса (в том числе частичная или по спеццене со скидкой);</li>
-                  <li>Переход по ссылке оплаты, направленной Исполнителем в личные сообщения Instagram Direct или Telegram.</li>
-                </ul>
-                <p>
-                  2.2. С момента совершения акцепта договор между Заказчиком и Исполнителем считается заключенным.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">3. Стоимость услуг и порядок расчетов</h4>
-                <p>
-                  3.1. Стоимость участия в курсе указана на сайте и составляет 1 490 рублей РФ (в период действия специального предложения).
-                </p>
-                <p>
-                  3.2. Оплата производится в рублях РФ в безналичном порядке через платежные сервисы (банковская карта, Система быстрых платежей / СБП) или по реквизитам Исполнителя.
-                </p>
-                <p>
-                  3.3. Услуга считается оказанной в полном объеме с момента предоставления Заказчику ссылки-доступа к закрытым материалам курса.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">4. Права и обязанности сторон</h4>
-                <p>
-                  4.1. Исполнитель обязуется предоставить Заказчику качественные материалы курса в заявленный срок.
-                </p>
-                <p>
-                  4.2. Заказчик обязуется использовать предоставленные материалы исключительно в личных некоммерческих целях. Запрещается копирование, распространение, передача третьим лицам или перепродажа видеоуроков и чек-листов курса.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">5. Реквизиты и контакты Исполнителя</h4>
-                <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#EAE1D7] text-xs space-y-1">
-                  <div><strong>Исполнитель:</strong> {AUTHOR_INFO.fullName} (Самозанятая)</div>
-                  <div><strong>ИНН:</strong> {AUTHOR_INFO.inn}</div>
-                  <div><strong>Email:</strong> {AUTHOR_INFO.email}</div>
-                  <div><strong>Telegram:</strong> {AUTHOR_INFO.telegram} ({AUTHOR_INFO.telegramUrl})</div>
-                  <div><strong>Instagram:</strong> @{AUTHOR_INFO.instagram} ({AUTHOR_INFO.instagramUrl})</div>
+        {/* Modal Body */}
+        <div className="flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 text-xs sm:text-sm text-stone-300 leading-relaxed font-sans select-text">
+          {currentTab === "requisites" ? (
+            <div className="space-y-6">
+              <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-800/40 text-xs text-emerald-300 flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 shrink-0 text-emerald-400 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-emerald-200">Официальные регистрационные данные продавца</p>
+                  <p className="text-[11px] text-emerald-400/90 mt-0.5">
+                    Деятельность осуществляется в строгом соответствии с Федеральным законом РФ № 422-ФЗ. Все расчеты фискализируются в ФНС РФ (сервис «Мой налог»).
+                  </p>
                 </div>
               </div>
-            </>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-1 relative">
+                  <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">
+                    ФИО исполнителя (Самозанятый)
+                  </span>
+                  <p className="font-bold text-stone-100 text-base">{LEGAL_REQUISITES.fullName}</p>
+                  <p className="text-xs text-stone-400">{LEGAL_REQUISITES.status}</p>
+                  <button
+                    onClick={() => copyToClipboard(LEGAL_REQUISITES.fullName, "fio")}
+                    className="absolute top-3 right-3 p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-400 hover:text-stone-200 text-xs"
+                    title="Скопировать ФИО"
+                  >
+                    {copiedField === "fio" ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                  </button>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-1 relative">
+                  <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">
+                    Идентификационный номер налогоплательщика (ИНН)
+                  </span>
+                  <p className="font-bold text-stone-100 text-base font-mono tracking-wider">{LEGAL_REQUISITES.inn}</p>
+                  <p className="text-xs text-stone-400">ФНС России • Проверен и активен</p>
+                  <button
+                    onClick={() => copyToClipboard(LEGAL_REQUISITES.inn, "inn")}
+                    className="absolute top-3 right-3 p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-400 hover:text-stone-200 text-xs"
+                    title="Скопировать ИНН"
+                  >
+                    {copiedField === "inn" ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                  </button>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-1 relative">
+                  <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">
+                    Email для обращений и возвратов
+                  </span>
+                  <a 
+                    href={`mailto:${LEGAL_REQUISITES.email}`}
+                    className="font-bold text-emerald-400 hover:underline text-base block font-mono"
+                  >
+                    {LEGAL_REQUISITES.email}
+                  </a>
+                  <p className="text-xs text-stone-400">Время ответа службы заботы: до 2-4 часов</p>
+                  <button
+                    onClick={() => copyToClipboard(LEGAL_REQUISITES.email, "email")}
+                    className="absolute top-3 right-3 p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-400 hover:text-stone-200 text-xs"
+                    title="Скопировать Email"
+                  >
+                    {copiedField === "email" ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                  </button>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-1 relative">
+                  <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">
+                    Служба заботы в Telegram
+                  </span>
+                  <a 
+                    href="https://t.me/Stas_Kosmos1"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-bold text-emerald-400 hover:underline text-base block font-mono"
+                  >
+                    {LEGAL_REQUISITES.telegramSupport}
+                  </a>
+                  <p className="text-xs text-stone-400">Быстрая помощь и оперативная поддержка</p>
+                  <button
+                    onClick={() => copyToClipboard(LEGAL_REQUISITES.telegramSupport, "telegram")}
+                    className="absolute top-3 right-3 p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-400 hover:text-stone-200 text-xs"
+                    title="Скопировать логин Telegram"
+                  >
+                    {copiedField === "telegram" ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                  </button>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-1">
+                  <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">
+                    Режим налогообложения
+                  </span>
+                  <p className="font-bold text-stone-200 text-sm">Налог на профессиональный доход (НПД)</p>
+                  <p className="text-xs text-stone-400">Без НДС (п. 1 ст. 143 НК РФ)</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-stone-950/60 border border-stone-800 space-y-2 text-xs">
+                <p className="font-semibold text-stone-200">Наименование реализуемого цифрового контента:</p>
+                <p className="text-stone-300">{LEGAL_REQUISITES.digitalContentName}</p>
+                <p className="text-[11px] text-stone-400">
+                  Формат поставки: электронный доступ к обучающим материалам, PDF-руководствам и программному интерфейсу веб-трекера.
+                </p>
+              </div>
+            </div>
           ) : (
-            <>
-              <div>
-                <p className="text-xs text-[#886C56] mb-4">
-                  Редакция от {new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })} г.
-                </p>
-                <p className="font-medium">
-                  Настоящая Политика конфиденциальности персональных данных (далее — «Политика») действует в отношении всей информации, которую самозанятая <strong>{AUTHOR_INFO.fullName}</strong> (ИНН {AUTHOR_INFO.inn}) может получить о пользователе во время использования сайта курса «Сама себе бровист».
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">1. Состав собираемых персональных данных</h4>
-                <p>
-                  1.1. При заполнении форм на Сайте или оформлении заказа Пользователь предоставляет следующие данные:
-                </p>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Имя Пользователя;</li>
-                  <li>Номер контактного телефона (для связи через Telegram/SMS);</li>
-                  <li>Никнейм в Instagram или Telegram;</li>
-                  <li>Адрес электронной почты (при отправке запроса или чека).</li>
-                </ul>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">2. Цели обработки персональных данных</h4>
-                <p>
-                  2.1. Персональные данные Пользователя обрабатываются исключительно в целях:
-                </p>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Идентификации стороны в рамках соглашений и договоров с Исполнителем;</li>
-                  <li>Отправки ссылки для доступа к закрытым материалам курса;</li>
-                  <li>Осуществления обратной связи, консультаций и клиентской поддержки;</li>
-                  <li>Направления подтверждений об оплате и фискальных чеков.</li>
-                </ul>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">3. Защита и конфиденциальность</h4>
-                <p>
-                  3.1. Исполнитель обязуется не передавать персональные данные третьим лицам, за исключением случаев, предусмотренных действующим законодательством РФ, а также за исключением сервисов эквайринга и отправки сообщений, необходимых для исполнения договора.
-                </p>
-                <p>
-                  3.2. Обработка персональных данных осуществляется в соответствии с Федеральным законом РФ № 152-ФЗ «О персональных данных».
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">4. Изменение и отзыв согласия</h4>
-                <p>
-                  4.1. Пользователь может в любой момент отозвать свое согласие на обработку персональных данных, направив письменное уведомление на адрес электронной почты Исполнителя: <strong>{AUTHOR_INFO.email}</strong> с темой «Отзыв согласия на обработку персональных данных».
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-bold text-[#1C1714] text-sm sm:text-base">5. Контакты оператора персональных данных</h4>
-                <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#EAE1D7] text-xs space-y-1">
-                  <div><strong>Оператор:</strong> {AUTHOR_INFO.fullName} (Самозанятая)</div>
-                  <div><strong>ИНН:</strong> {AUTHOR_INFO.inn}</div>
-                  <div><strong>Email:</strong> {AUTHOR_INFO.email}</div>
-                  <div><strong>Telegram:</strong> {AUTHOR_INFO.telegram}</div>
-                </div>
-              </div>
-            </>
+            <div className="bg-stone-950 p-5 sm:p-7 rounded-2xl border border-stone-800/90 whitespace-pre-line font-mono text-[11px] sm:text-xs text-stone-300 leading-relaxed shadow-inner">
+              {currentTab === "offer" ? OFFER_CONTRACT_TEXT : PRIVACY_POLICY_TEXT}
+            </div>
           )}
         </div>
 
-        {/* Modal Footer */}
-        <div className="p-4 sm:p-5 bg-[#FAF7F2] border-t border-[#EAE1D7] flex justify-end shrink-0">
-          <button
-            onClick={onClose}
-            className="px-6 py-2.5 rounded-xl bg-[#1C1714] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#322A24] transition-colors"
-          >
-            Понятно, закрыть
-          </button>
+        {/* Footer actions */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-t border-stone-800 bg-stone-950/90 text-xs">
+          <div className="flex items-center gap-2 text-stone-400 text-[11px]">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Документы актуальны на {new Date().getFullYear()} год</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                const text = currentTab === "offer" 
+                  ? OFFER_CONTRACT_TEXT 
+                  : currentTab === "privacy" 
+                    ? PRIVACY_POLICY_TEXT 
+                    : `ФИО: ${LEGAL_REQUISITES.fullName}\nИНН: ${LEGAL_REQUISITES.inn}\nEmail: ${LEGAL_REQUISITES.email}`;
+                copyToClipboard(text, "fullDoc");
+              }}
+              className="px-3 py-1.5 rounded-xl border border-stone-700 bg-stone-900 hover:bg-stone-800 text-stone-300 transition-colors flex items-center gap-1.5"
+            >
+              {copiedField === "fullDoc" ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+              <span>{copiedField === "fullDoc" ? "Скопировано" : "Скопировать текст"}</span>
+            </button>
+            <button
+              onClick={onClose}
+              className="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors"
+            >
+              Понятно
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
