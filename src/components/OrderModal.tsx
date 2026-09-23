@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, Check, Sparkles, ShieldCheck, Instagram, MessageCircle, Send, ArrowRight, BookOpen, Video, Smartphone } from 'lucide-react';
 import { TARIFFS, AUTHOR_INFO } from '../data/courseData';
+import Logo from './Logo';
 
 interface OrderModalProps {
   isOpen: boolean;
@@ -55,16 +56,9 @@ export default function OrderModal({ isOpen, onClose, onOpenLegal }: OrderModalP
         className="relative w-full max-w-lg bg-[#FAF7F2] rounded-3xl shadow-2xl border border-[#D8C7B5] overflow-hidden my-auto max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header with Close button */}
-        <div className="p-5 sm:p-6 bg-white border-b border-[#EAE1D7] flex items-center justify-between shrink-0">
-          <div>
-            <span className="text-[11px] uppercase tracking-wider font-semibold text-[#886C56]">
-              Оформление участия в курсе
-            </span>
-            <h3 className="font-editorial text-2xl font-bold text-[#1C1714]">
-              «Сама себе бровист»
-            </h3>
-          </div>
+        {/* Header with Close button & Logo */}
+        <div className="p-4 sm:p-5 bg-white border-b border-[#EAE1D7] flex items-center justify-between shrink-0">
+          <Logo variant="light" size="sm" showSubtitle={false} />
 
           <button
             onClick={onClose}

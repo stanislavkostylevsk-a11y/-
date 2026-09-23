@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Instagram, Send, MessageCircle, Menu, X, Sparkles, Clock } from 'lucide-react';
 import { AUTHOR_INFO } from '../data/courseData';
+import Logo from './Logo';
 
 interface HeaderProps {
   onOpenOrder: (tariffId?: string) => void;
@@ -101,22 +102,9 @@ export default function Header({ onOpenOrder, onOpenDirectChat }: HeaderProps) {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo & Author badge */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-[#1C1714] text-[#FAF7F2] flex items-center justify-center font-editorial text-xl font-bold tracking-wider group-hover:scale-105 transition-transform">
-              А
-            </div>
-            <div>
-              <div className="text-xs uppercase tracking-widest text-[#886C56] font-semibold">
-                Авторский мини-курс
-              </div>
-              <div className="font-editorial text-lg sm:text-xl font-bold text-[#1C1714] leading-tight flex items-center gap-1.5">
-                Сама себе бровист
-                <span className="text-xs font-sans font-normal text-[#A88B72] border-l border-[#D8C7B5] pl-1.5 hidden sm:inline">
-                  Амалия
-                </span>
-              </div>
-            </div>
+          {/* Modern Brand Logo */}
+          <a href="#" className="flex items-center">
+            <Logo variant="light" size="md" />
           </a>
 
           {/* Desktop Navigation Links */}

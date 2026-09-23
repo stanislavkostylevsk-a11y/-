@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Sparkles, Clock, ArrowRight } from 'lucide-react';
+import Logo from './Logo';
 
 interface StickyMobileBarProps {
   onOpenOrder: () => void;
@@ -25,16 +26,19 @@ export default function StickyMobileBar({ onOpenOrder }: StickyMobileBarProps) {
       className="fixed bottom-0 left-0 right-0 z-40 bg-[#1C1714]/95 backdrop-blur-md text-[#FAF7F2] p-3 sm:py-3.5 px-4 border-t border-[#3D332B] shadow-2xl transition-all duration-300 md:hidden animate-in slide-in-from-bottom-3"
     >
       <div className="flex items-center justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-1.5 text-[10px] text-[#E07A5F] font-bold uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E07A5F] animate-ping" />
-            <span>Спеццена -50%</span>
-          </div>
-          <div className="text-base font-extrabold text-white font-editorial leading-tight">
-            1 490 ₽
-            <span className="text-xs font-sans text-[#A88B72] line-through ml-1.5 font-normal">
-              2 990 ₽
-            </span>
+        <div className="flex items-center gap-2.5">
+          <Logo variant="dark" size="xs" showSubtitle={false} showText={false} />
+          <div>
+            <div className="flex items-center gap-1.5 text-[10px] text-[#E07A5F] font-bold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E07A5F] animate-ping" />
+              <span>Спеццена -50%</span>
+            </div>
+            <div className="text-base font-extrabold text-white font-editorial leading-tight">
+              1 490 ₽
+              <span className="text-xs font-sans text-[#A88B72] line-through ml-1.5 font-normal">
+                2 990 ₽
+              </span>
+            </div>
           </div>
         </div>
 

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGradGold" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FAF7F2"/>
+      <stop offset="100%" stop-color="#EFE6DA"/>
+    </radialGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A373"/>
+      <stop offset="50%" stop-color="#B37D4E"/>
+      <stop offset="100%" stop-color="#6F4627"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="128" fill="url(#bgGradGold)"/>
+  <rect x="36" y="36" width="440" height="440" rx="100" fill="none" stroke="url(#goldGrad2)" stroke-width="2.5" stroke-opacity="0.4"/>
+
+  <!-- Eyebrow curve -->
+  <path d="M120 220 C180 145, 330 140, 400 190" fill="none" stroke="url(#goldGrad2)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M335 170 C365 180, 385 195, 410 225" fill="none" stroke="url(#goldGrad2)" stroke-width="11" stroke-linecap="round" stroke-opacity="0.8"/>
+
+  <!-- Letter A -->
+  <path d="M256 128 L168 376 M256 128 L344 376" fill="none" stroke="#1C1714" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M142 300 H370" fill="none" stroke="url(#goldGrad2)" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- Starlet -->
+  <circle cx="256" cy="112" r="18" fill="url(#goldGrad2)"/>
+
+  <text x="256" y="420" font-family="'Cinzel', 'Playfair Display', serif, system-ui" font-size="20" font-weight="700" letter-spacing="10" fill="#1C1714" text-anchor="middle">AMALIA BROWS</text>
+  <text x="256" y="445" font-family="system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="8" fill="#886C56" text-anchor="middle">ACADEMY</text>
+</svg>

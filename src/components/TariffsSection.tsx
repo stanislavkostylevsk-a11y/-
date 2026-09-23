@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Check, Sparkles, Clock, ShieldCheck, ArrowRight, Send, BookOpen, Video } from 'lucide-react';
 import { TARIFFS } from '../data/courseData';
+import Logo from './Logo';
 
 interface TariffsSectionProps {
   onSelectTariff: (tariffId: string) => void;
@@ -66,7 +67,10 @@ export default function TariffsSection({ onSelectTariff }: TariffsSectionProps) 
             </div>
 
             {/* Header info */}
-            <div className="text-center mb-8 pt-2">
+            <div className="text-center mb-8 pt-3">
+              <div className="flex justify-center mb-3">
+                <Logo variant="dark" size="sm" showSubtitle={false} showText={false} />
+              </div>
               <h3 className="font-editorial text-3xl sm:text-4xl font-bold text-[#FAF7F2] mb-2">
                 {singleTariff.name}
               </h3>

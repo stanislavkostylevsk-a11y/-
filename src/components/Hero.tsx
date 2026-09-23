@@ -1,5 +1,6 @@
 import { Sparkles, CheckCircle2, Instagram, ArrowRight, ShieldCheck } from 'lucide-react';
 import { AUTHOR_INFO, AUTHOR_PHOTOS, COURSE_ABOUT } from '../data/courseData';
+import Logo from './Logo';
 
 interface HeroProps {
   onOpenOrder: (tariffId?: string) => void;
@@ -20,11 +21,11 @@ export default function Hero({ onOpenOrder, onOpenDirectChat }: HeroProps) {
           {/* Left Column: Offer, Copy & CTAs */}
           <div className="lg:col-span-7 flex flex-col items-center text-center">
             
-            {/* Instagram Story pill badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1C1714] text-[#FAF7F2] text-xs font-semibold mb-6 shadow-xs mx-auto">
-              <span className="w-2 h-2 rounded-full bg-[#E07A5F] animate-pulse" />
-              <Instagram className="w-3.5 h-3.5 text-[#E07A5F]" />
-              <span>Мини-курс от топ-мастера • Автор Амалия</span>
+            {/* Instagram Story pill badge with Logo emblem */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#1C1714] text-[#FAF7F2] text-xs font-semibold mb-6 shadow-sm mx-auto border border-[#3A2F27]">
+              <Logo variant="dark" size="xs" showSubtitle={false} showText={false} />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E07A5F] animate-pulse" />
+              <span>AMALIA BROWS • Онлайн мини-курс</span>
             </div>
 
             {/* Main Headline */}

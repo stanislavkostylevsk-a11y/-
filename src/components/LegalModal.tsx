@@ -1,5 +1,6 @@
 import { X, ShieldCheck, FileText } from 'lucide-react';
 import { AUTHOR_INFO } from '../data/courseData';
+import Logo from './Logo';
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -22,14 +23,12 @@ export default function LegalModal({ isOpen, type, onClose }: LegalModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 bg-[#FAF7F2] border-b border-[#EAE1D7] flex items-center justify-between shrink-0">
+        <div className="p-4 sm:p-5 bg-[#FAF7F2] border-b border-[#EAE1D7] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#1C1714] text-white flex items-center justify-center shrink-0">
-              {isOffer ? <FileText className="w-5 h-5 text-[#E07A5F]" /> : <ShieldCheck className="w-5 h-5 text-[#2AABEE]" />}
-            </div>
+            <Logo variant="light" size="sm" showSubtitle={false} showText={false} />
             <div>
               <span className="text-[11px] uppercase tracking-wider font-semibold text-[#886C56]">
-                Юридическая информация
+                Юридическая информация • Amalia Brows
               </span>
               <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1714]">
                 {isOffer ? 'Публичная оферта' : 'Политика конфиденциальности'}

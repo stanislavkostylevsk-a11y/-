@@ -1,5 +1,6 @@
 import { Instagram, Send, Mail } from 'lucide-react';
 import { AUTHOR_INFO } from '../data/courseData';
+import Logo from './Logo';
 
 interface FooterProps {
   onOpenOrder: () => void;
@@ -16,25 +17,13 @@ export default function Footer({ onOpenOrder, onOpenDirectChat, onOpenLegal }: F
           
           {/* Brand & Author Info */}
           <div className="md:col-span-5 space-y-4 flex flex-col items-center md:items-start">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#FAF7F2] text-[#1C1714] flex items-center justify-center font-editorial text-xl font-bold">
-                А
-              </div>
-              <div className="text-left">
-                <div className="text-[11px] uppercase tracking-widest text-[#A88B72] font-semibold">
-                  Авторский онлайн мини-курс
-                </div>
-                <div className="font-editorial text-xl font-bold text-white">
-                  Сама себе бровист
-                </div>
-              </div>
-            </div>
+            <Logo variant="dark" size="md" />
 
             <p className="text-xs sm:text-sm text-[#D8C7B5] max-w-sm leading-relaxed text-center md:text-left">
               Обучающий онлайн-курс от топ-мастера Амалии. Помогаем девушкам обрести уверенность и идеальные брови без переплат салонным мастерам.
             </p>
 
-            <div className="flex items-center justify-center md:justify-start gap-3 pt-2">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
               <a
                 href={AUTHOR_INFO.instagramUrl}
                 target="_blank"
