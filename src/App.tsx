@@ -5,7 +5,6 @@ import PainPoints from "./components/PainPoints";
 import AboutCourseSection from "./components/AboutCourseSection";
 import CourseCurriculumSection from "./components/CourseCurriculumSection";
 import TariffsSection from "./components/TariffsSection";
-import BeforeAfterGallery from "./components/BeforeAfterGallery";
 import AuthorSection from "./components/AuthorSection";
 import FaqSection from "./components/FaqSection";
 import Footer from "./components/Footer";
@@ -79,10 +78,7 @@ export default function App() {
           <CourseCurriculumSection onOpenOrder={() => handleOpenOrder("solo")} />
         </div>
 
-        {/* 6. Before / After Gallery: Реальные работы учениц */}
-        <BeforeAfterGallery onOpenOrder={() => handleOpenOrder("solo")} />
-
-        {/* 7. Tariff & Pricing */}
+        {/* 6. Tariff & Pricing */}
         <TariffsSection onSelectTariff={handleOpenOrder} />
 
         {/* 8. About the Author: Амалия Акопян */}

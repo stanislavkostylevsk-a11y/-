@@ -14,7 +14,6 @@ export default function BrowNavbar({ onOpenOrder, onOpenDirectChat }: BrowNavbar
   const navLinks = [
     { label: 'О курсе', href: '#about-course' },
     { label: 'Программа', href: '#course-program' },
-    { label: 'Результаты', href: '#results' },
     { label: 'Тариф', href: '#tariffs' },
     { label: 'Об авторе', href: '#author' },
     { label: 'FAQ', href: '#faq' },
