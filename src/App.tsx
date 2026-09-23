@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import BrowNavbar from "./components/BrowNavbar";
 import Hero from "./components/Hero";
-import PainPoints from "./components/PainPoints";
 import AboutCourseSection from "./components/AboutCourseSection";
 import CourseCurriculumSection from "./components/CourseCurriculumSection";
 import TariffsSection from "./components/TariffsSection";
@@ -67,10 +66,7 @@ export default function App() {
           onPlayVideoModal={() => setIsVideoModalOpen(true)}
         />
 
-        {/* 3. Pain Points: Знакомо? Утренние мучения со сборами */}
-        <PainPoints onOpenOrder={() => handleOpenOrder("solo")} />
-
-        {/* 4. About the Course & What You Will Learn */}
+        {/* 3. About the Course & What You Will Learn */}
         <AboutCourseSection onOpenOrder={() => handleOpenOrder("solo")} />
 
         {/* 5. Course Curriculum (Блоки 1-5) */}
