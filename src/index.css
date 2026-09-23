@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+@utility font-editorial {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}

@@ -277,8 +277,8 @@ export const HabitTrackerApp: React.FC = () => {
           dayNumber: activeDay,
           completedHabitIds: [],
           energyScore: 5,
-          tongueState: "clean",
-          gutState: "comfort",
+          tongueState: "clean" as const,
+          gutState: "comfort" as const,
           weight: "",
           notes: ""
         }

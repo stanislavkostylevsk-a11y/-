@@ -182,3 +182,76 @@ export interface GoogleAiPromptPack {
     instructions: string[];
   };
 }
+
+export interface CourseModule {
+  id: number;
+  number: string;
+  title: string;
+  subtitle: string;
+  duration: string;
+  lessonsCount: number;
+  description: string;
+  lessons: string[];
+  keyResult: string;
+  materialsBadge: string;
+}
+
+export interface Tariff {
+  id: string;
+  name: string;
+  tagline: string;
+  price: number;
+  oldPrice: number;
+  isPopular?: boolean;
+  badge?: string;
+  accessDuration: string;
+  ctaText: string;
+  features: string[];
+}
+
+export interface BeforeAfterCase {
+  id: string;
+  studentName: string;
+  instagramHandle: string;
+  story: string;
+  timeSpent: string;
+  problem: string;
+  solution: string;
+  beforeImg: string;
+  afterImg: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface BronsunShade {
+  code: string;
+  name: string;
+  tone: string;
+  description: string;
+  targetAudience: string;
+  colorHex: string;
+}
+
+export interface MixRecipe {
+  category: string;
+  name: string;
+  formula: string;
+  description: string;
+}
+
+export interface HennaShade {
+  code: string;
+  name: string;
+  characteristic: string;
+}
+
+export interface MaterialItem {
+  name: string;
+  role: string;
+  advice: string;
+  iconType: string;
+}
+
