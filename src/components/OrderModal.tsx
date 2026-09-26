@@ -293,7 +293,7 @@ export default function OrderModal({ isOpen, onClose, onOpenLegal }: OrderModalP
                 <button
                   type="button"
                   onClick={() => onOpenLegal?.('refund')}
-                  className="underline hover:text-[#1C1714] font-medium text-emerald-800"
+                  className="underline hover:text-[#1C1714] font-medium"
                 >
                   условиями возврата
                 </button>

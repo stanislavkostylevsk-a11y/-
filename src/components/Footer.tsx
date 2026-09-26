@@ -118,9 +118,9 @@ export default function Footer({ onOpenOrder, onOpenDirectChat, onOpenLegal }: F
             <span>•</span>
             <button
               onClick={() => onOpenLegal('refund')}
-              className="hover:text-emerald-400 transition-colors underline decoration-dotted underline-offset-2 cursor-pointer font-medium text-emerald-500/90"
+              className="hover:text-white transition-colors underline decoration-dotted underline-offset-2 cursor-pointer"
             >
-              Правила возврата средств (ст. 782 ГК РФ)
+              Условия возврата
             </button>
             <span>•</span>
             <button
