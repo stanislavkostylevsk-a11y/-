@@ -5,7 +5,7 @@ import Logo from './Logo';
 interface FooterProps {
   onOpenOrder: () => void;
   onOpenDirectChat: () => void;
-  onOpenLegal: (type: 'offer' | 'privacy') => void;
+  onOpenLegal: (type: 'offer' | 'refund' | 'privacy' | 'requisites') => void;
 }
 
 export default function Footer({ onOpenOrder, onOpenDirectChat, onOpenLegal }: FooterProps) {
@@ -108,7 +108,7 @@ export default function Footer({ onOpenOrder, onOpenDirectChat, onOpenLegal }: F
           <div>
             © {new Date().getFullYear()} Курс «Сама себе бровист». Автор — {AUTHOR_INFO.name}. Все права защищены.
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <button
               onClick={() => onOpenLegal('offer')}
               className="hover:text-white transition-colors underline decoration-dotted underline-offset-2 cursor-pointer"
@@ -117,10 +117,24 @@ export default function Footer({ onOpenOrder, onOpenDirectChat, onOpenLegal }: F
             </button>
             <span>•</span>
             <button
+              onClick={() => onOpenLegal('refund')}
+              className="hover:text-emerald-400 transition-colors underline decoration-dotted underline-offset-2 cursor-pointer font-medium text-emerald-500/90"
+            >
+              Правила возврата средств (ст. 782 ГК РФ)
+            </button>
+            <span>•</span>
+            <button
               onClick={() => onOpenLegal('privacy')}
               className="hover:text-white transition-colors underline decoration-dotted underline-offset-2 cursor-pointer"
             >
               Политика конфиденциальности
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => onOpenLegal('requisites')}
+              className="hover:text-white transition-colors underline decoration-dotted underline-offset-2 cursor-pointer"
+            >
+              Реквизиты
             </button>
           </div>
         </div>

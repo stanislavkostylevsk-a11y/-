@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { 
   OFFER_CONTRACT_TEXT, 
+  REFUND_POLICY_TEXT,
   PRIVACY_POLICY_TEXT, 
   LEGAL_REQUISITES 
 } from "../data/legalDocuments";
 import { 
   X, 
   FileText, 
+  RotateCcw,
   ShieldCheck, 
   Building2, 
   Copy, 
   Check, 
   Printer, 
-  Mail, 
-  CreditCard,
-  Download,
-  AlertCircle
+  AlertCircle,
+  HelpCircle,
+  Clock,
+  FileCheck,
+  Ban
 } from "lucide-react";
 
-export type LegalTabType = "offer" | "privacy" | "requisites";
+export type LegalTabType = "offer" | "refund" | "privacy" | "requisites";
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -69,6 +72,19 @@ export const LegalModal: React.FC<LegalModalProps> = ({
     window.print();
   };
 
+  const getDocText = () => {
+    switch (currentTab) {
+      case "offer":
+        return OFFER_CONTRACT_TEXT;
+      case "refund":
+        return REFUND_POLICY_TEXT;
+      case "privacy":
+        return PRIVACY_POLICY_TEXT;
+      case "requisites":
+        return `Исполнитель: ${LEGAL_REQUISITES.fullName}\nИНН: ${LEGAL_REQUISITES.inn}\nСтатус: ${LEGAL_REQUISITES.status}\nEmail: ${LEGAL_REQUISITES.email}\nTelegram: ${LEGAL_REQUISITES.telegramSupport}`;
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-stone-950/80 backdrop-blur-sm animate-fade-in">
       <div 
@@ -80,17 +96,19 @@ export const LegalModal: React.FC<LegalModalProps> = ({
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/60 text-emerald-400">
               {currentTab === "offer" && <FileText className="h-5 w-5" />}
+              {currentTab === "refund" && <RotateCcw className="h-5 w-5" />}
               {currentTab === "privacy" && <ShieldCheck className="h-5 w-5" />}
               {currentTab === "requisites" && <Building2 className="h-5 w-5" />}
             </div>
             <div>
               <h2 className="font-['Cinzel'] text-base sm:text-lg font-bold text-stone-100">
                 {currentTab === "offer" && "Договор публичной оферты"}
+                {currentTab === "refund" && "Порядок и правила возврата денежных средств"}
                 {currentTab === "privacy" && "Политика конфиденциальности"}
                 {currentTab === "requisites" && "Реквизиты самозанятого"}
               </h2>
               <p className="text-[11px] text-stone-400">
-                Самозанятый {LEGAL_REQUISITES.fullName} • ИНН {LEGAL_REQUISITES.inn}
+                Самозанятая {LEGAL_REQUISITES.fullName} • ИНН {LEGAL_REQUISITES.inn}
               </p>
             </div>
           </div>
@@ -118,7 +136,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         <div className="flex border-b border-stone-800 bg-stone-950/40 px-5 pt-2 gap-2 overflow-x-auto">
           <button
             onClick={() => handleSelectTab("offer")}
-            className={`pb-3 px-3.5 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+            className={`pb-3 px-3 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
               currentTab === "offer"
                 ? "border-emerald-500 text-emerald-400"
                 : "border-transparent text-stone-400 hover:text-stone-200"
@@ -129,20 +147,35 @@ export const LegalModal: React.FC<LegalModalProps> = ({
           </button>
 
           <button
+            onClick={() => handleSelectTab("refund")}
+            className={`pb-3 px-3 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+              currentTab === "refund"
+                ? "border-emerald-500 text-emerald-400"
+                : "border-transparent text-stone-400 hover:text-stone-200"
+            }`}
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            <span>Условия возврата</span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-700/60 text-emerald-300 font-mono">
+              ст. 782 ГК РФ
+            </span>
+          </button>
+
+          <button
             onClick={() => handleSelectTab("privacy")}
-            className={`pb-3 px-3.5 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+            className={`pb-3 px-3 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
               currentTab === "privacy"
                 ? "border-emerald-500 text-emerald-400"
                 : "border-transparent text-stone-400 hover:text-stone-200"
             }`}
           >
             <ShieldCheck className="h-3.5 w-3.5" />
-            <span>Политика конфиденциальности</span>
+            <span>Конфиденциальность</span>
           </button>
 
           <button
             onClick={() => handleSelectTab("requisites")}
-            className={`pb-3 px-3.5 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
+            className={`pb-3 px-3 text-xs font-semibold transition-all border-b-2 whitespace-nowrap flex items-center gap-2 ${
               currentTab === "requisites"
                 ? "border-emerald-500 text-emerald-400"
                 : "border-transparent text-stone-400 hover:text-stone-200"
@@ -155,6 +188,48 @@ export const LegalModal: React.FC<LegalModalProps> = ({
 
         {/* Modal Body */}
         <div className="flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 text-xs sm:text-sm text-stone-300 leading-relaxed font-sans select-text">
+          
+          {/* Quick Notice for Refund or Offer Tab */}
+          {(currentTab === "offer" || currentTab === "refund") && (
+            <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-3">
+              <div className="flex items-center gap-2 text-emerald-400 font-semibold text-xs uppercase tracking-wider">
+                <FileCheck className="h-4 w-4" />
+                <span>Гарантии соблюдения законодательства РФ (ст. 782 ГК РФ, ст. 31, 32 ЗоЗПП)</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div className="p-3 rounded-xl bg-stone-900 border border-stone-800 space-y-1">
+                  <div className="flex items-center gap-1.5 text-stone-200 font-semibold">
+                    <Clock className="h-3.5 w-3.5 text-amber-400" />
+                    <span>Сроки рассмотрения</span>
+                  </div>
+                  <p className="text-[11px] text-stone-400">
+                    До <strong>10 календарных дней</strong> с момента подачи заявления.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-stone-900 border border-stone-800 space-y-1">
+                  <div className="flex items-center gap-1.5 text-stone-200 font-semibold">
+                    <RotateCcw className="h-3.5 w-3.5 text-emerald-400" />
+                    <span>Срок выплат</span>
+                  </div>
+                  <p className="text-[11px] text-stone-400">
+                    Выплата в течение <strong>10 дней</strong> после решения тем же способом.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-stone-900 border border-stone-800 space-y-1">
+                  <div className="flex items-center gap-1.5 text-stone-200 font-semibold">
+                    <Ban className="h-3.5 w-3.5 text-rose-400" />
+                    <span>Без скрытых комиссий</span>
+                  </div>
+                  <p className="text-[11px] text-stone-400">
+                    Возврат <strong>БЕЗ удержания комиссий</strong> платежного сервиса или банка.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {currentTab === "requisites" ? (
             <div className="space-y-6">
               <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-800/40 text-xs text-emerald-300 flex items-start gap-3">
@@ -208,7 +283,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   >
                     {LEGAL_REQUISITES.email}
                   </a>
-                  <p className="text-xs text-stone-400">Время ответа службы заботы: до 2-4 часов</p>
+                  <p className="text-xs text-stone-400">Официальный прием заявлений и претензий</p>
                   <button
                     onClick={() => copyToClipboard(LEGAL_REQUISITES.email, "email")}
                     className="absolute top-3 right-3 p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-400 hover:text-stone-200 text-xs"
@@ -223,14 +298,14 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                     Служба заботы в Telegram
                   </span>
                   <a 
-                    href="https://t.me/Stas_Kosmos1"
+                    href="https://t.me/AmiAmii23"
                     target="_blank"
                     rel="noreferrer"
                     className="font-bold text-emerald-400 hover:underline text-base block font-mono"
                   >
                     {LEGAL_REQUISITES.telegramSupport}
                   </a>
-                  <p className="text-xs text-stone-400">Быстрая помощь и оперативная поддержка</p>
+                  <p className="text-xs text-stone-400">Быстрая помощь и оперативная связь</p>
                   <button
                     onClick={() => copyToClipboard(LEGAL_REQUISITES.telegramSupport, "telegram")}
                     className="absolute top-3 right-3 p-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-400 hover:text-stone-200 text-xs"
@@ -247,19 +322,27 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   <p className="font-bold text-stone-200 text-sm">Налог на профессиональный доход (НПД)</p>
                   <p className="text-xs text-stone-400">Без НДС (п. 1 ст. 143 НК РФ)</p>
                 </div>
+
+                <div className="p-4 rounded-2xl bg-stone-950 border border-stone-800 space-y-1">
+                  <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">
+                    Платежный агрегатор
+                  </span>
+                  <p className="font-bold text-stone-200 text-sm">Защищенный эквайринг Robokassa</p>
+                  <p className="text-xs text-stone-400">Банковские карты МИР, Visa, MasterCard, СБП</p>
+                </div>
               </div>
 
               <div className="p-4 rounded-2xl bg-stone-950/60 border border-stone-800 space-y-2 text-xs">
                 <p className="font-semibold text-stone-200">Наименование реализуемого цифрового контента:</p>
                 <p className="text-stone-300">{LEGAL_REQUISITES.digitalContentName}</p>
                 <p className="text-[11px] text-stone-400">
-                  Формат поставки: электронный доступ к обучающим материалам, PDF-руководствам и программному интерфейсу веб-трекера.
+                  Формат поставки: электронный дистанционный доступ к обучающим материалам курса в закрытом Telegram-канале.
                 </p>
               </div>
             </div>
           ) : (
             <div className="bg-stone-950 p-5 sm:p-7 rounded-2xl border border-stone-800/90 whitespace-pre-line font-mono text-[11px] sm:text-xs text-stone-300 leading-relaxed shadow-inner">
-              {currentTab === "offer" ? OFFER_CONTRACT_TEXT : PRIVACY_POLICY_TEXT}
+              {getDocText()}
             </div>
           )}
         </div>
@@ -268,18 +351,13 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         <div className="flex items-center justify-between px-5 py-3.5 border-t border-stone-800 bg-stone-950/90 text-xs">
           <div className="flex items-center gap-2 text-stone-400 text-[11px]">
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Документы актуальны на {new Date().getFullYear()} год</span>
+            <span>Редакция {new Date().getFullYear()} г. Соответствует ст. 782 ГК РФ и ЗоЗПП</span>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
-                const text = currentTab === "offer" 
-                  ? OFFER_CONTRACT_TEXT 
-                  : currentTab === "privacy" 
-                    ? PRIVACY_POLICY_TEXT 
-                    : `ФИО: ${LEGAL_REQUISITES.fullName}\nИНН: ${LEGAL_REQUISITES.inn}\nEmail: ${LEGAL_REQUISITES.email}`;
-                copyToClipboard(text, "fullDoc");
+                copyToClipboard(getDocText(), "fullDoc");
               }}
               className="px-3 py-1.5 rounded-xl border border-stone-700 bg-stone-900 hover:bg-stone-800 text-stone-300 transition-colors flex items-center gap-1.5"
             >

@@ -26,12 +26,12 @@ export default function App() {
     setIsOrderOpen(true);
   };
 
-  const handleOpenLegal = (tab: "offer" | "privacy" | "requisites") => {
-    setLegalTab(tab as LegalTabType);
+  const handleOpenLegal = (tab: LegalTabType = "offer") => {
+    setLegalTab(tab);
     setIsLegalOpen(true);
   };
 
-  // Listen to hash changes for direct deep linking (#order, #faq, #offer, #privacy)
+  // Listen to hash changes for direct deep linking (#order, #faq, #offer, #refund, #privacy)
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.toLowerCase();
@@ -39,8 +39,12 @@ export default function App() {
         handleOpenOrder("solo");
       } else if (hash === "#offer" || hash === "#oferta") {
         handleOpenLegal("offer");
+      } else if (hash === "#refund" || hash === "#vozvrat") {
+        handleOpenLegal("refund");
       } else if (hash === "#privacy" || hash === "#policy") {
         handleOpenLegal("privacy");
+      } else if (hash === "#requisites") {
+        handleOpenLegal("requisites");
       } else if (hash === "#direct" || hash === "#chat") {
         setIsDirectChatOpen(true);
       }

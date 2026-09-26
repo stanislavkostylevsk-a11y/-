@@ -7,7 +7,7 @@ interface OrderModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTariffId?: string;
-  onOpenLegal?: (type: 'offer' | 'privacy') => void;
+  onOpenLegal?: (type: 'offer' | 'refund' | 'privacy' | 'requisites') => void;
 }
 
 export default function OrderModal({ isOpen, onClose, onOpenLegal }: OrderModalProps) {
@@ -288,6 +288,14 @@ export default function OrderModal({ isOpen, onClose, onOpenLegal }: OrderModalP
                   className="underline hover:text-[#1C1714] font-medium"
                 >
                   офертой
+                </button>
+                <span>,</span>
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal?.('refund')}
+                  className="underline hover:text-[#1C1714] font-medium text-emerald-800"
+                >
+                  условиями возврата
                 </button>
                 <span>и</span>
                 <button

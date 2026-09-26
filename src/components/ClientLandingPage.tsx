@@ -83,6 +83,8 @@ export const ClientLandingPage: React.FC<ClientLandingPageProps> = ({ onSwitchTo
       const hash = window.location.hash.toLowerCase();
       if (hash === "#offer" || hash === "#oferta") {
         openLegalModal("offer");
+      } else if (hash === "#refund" || hash === "#vozvrat") {
+        openLegalModal("refund");
       } else if (hash === "#privacy" || hash === "#policy") {
         openLegalModal("privacy");
       } else if (hash === "#requisites" || hash === "#rekvizity") {
